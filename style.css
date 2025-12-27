@@ -1,0 +1,525 @@
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+@font-face {
+    font-family: "Rodin";
+    src: url("Rodin-Regular.ttf");
+    font-weight: normal;
+}
+
+.spacer {
+    
+    height: 200px; 
+    width: 100%;
+}
+.year {
+    color: #F59525;
+    font-family: "Rodin";
+    text-align: center;
+    font-size: 22vw; 
+
+    /* Outline also scales! 
+       0.4vw is roughly 4px on a standard 1000px wide screen,
+       but it will shrink on mobile and grow on desktop.
+    */
+    --stroke: 0.4vw; 
+    
+    text-shadow: 
+        
+        calc(var(--stroke) * -1) calc(var(--stroke) * -1) 0 white,  
+        var(--stroke) calc(var(--stroke) * -1) 0 white,
+        calc(var(--stroke) * -1) var(--stroke) 0 white,
+        var(--stroke) var(--stroke) 0 white,
+        
+        0px calc(var(--stroke) * -1) 0 white,
+        0px var(--stroke) 0 white,
+        calc(var(--stroke) * -1) 0px 0 white,
+        var(--stroke) 0px 0 white;
+}
+.text {
+    color: #F59525;
+    font-family: "Rodin";
+    text-align: center;
+    font-size: 22vw; 
+
+    /* Outline also scales! 
+       0.4vw is roughly 4px on a standard 1000px wide screen,
+       but it will shrink on mobile and grow on desktop.
+    */
+    --stroke: 0.2vw; 
+    
+    text-shadow: 
+        
+        calc(var(--stroke) * -1) calc(var(--stroke) * -1) 0 white,  
+        var(--stroke) calc(var(--stroke) * -1) 0 white,
+        calc(var(--stroke) * -1) var(--stroke) 0 white,
+        var(--stroke) var(--stroke) 0 white,
+        
+        0px calc(var(--stroke) * -1) 0 white,
+        0px var(--stroke) 0 white,
+        calc(var(--stroke) * -1) 0px 0 white,
+        var(--stroke) 0px 0 white;
+}
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1; 
+
+  --c1: #A37B4C;
+  --c2: #855104;
+  --s: 64px;
+
+  
+  background-color: #e2aa6a;
+  
+  background-image: url("checker-fallback.png");
+
+  
+  background-image: -webkit-conic-gradient(var(--c1) 90deg, var(--c2) 90deg 180deg, var(--c1) 180deg 270deg, var(--c2) 270deg), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><rect width='32' height='32' fill='%23e2aa6a'/><rect x='32' y='32' width='32' height='32' fill='%23e2aa6a'/><rect x='32' width='32' height='32' fill='%23b87106'/><rect y='32' width='32' height='32' fill='%23b87106'/></svg>");
+  
+  background-image: conic-gradient(var(--c1) 90deg, var(--c2) 90deg 180deg, var(--c1) 180deg 270deg, var(--c2) 270deg), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><rect width='32' height='32' fill='%23e2aa6a'/><rect x='32' y='32' width='32' height='32' fill='%23e2aa6a'/><rect x='32' width='32' height='32' fill='%23b87106'/><rect y='32' width='32' height='32' fill='%23b87106'/></svg>");
+
+  
+  background-size: var(--s) var(--s), var(--s) var(--s);
+  background-repeat: repeat;
+
+  animation: scroll-bg 4s linear infinite;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .bg { animation: none; }
+}
+
+@keyframes scroll-bg {
+  to { background-position: var(--s) var(--s); }
+}
+
+
+.border-image {
+/* 1.5vw will scale. 
+       On a 1000px screen, it's 15px. 
+       On a 400px screen, it's 6px. */
+    border: 0.7vw solid white; 
+    
+    
+    border-radius: 2vw; 
+    
+    
+    box-sizing: border-box;
+}
+.content-section {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+.content-section.gallery {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+
+@supports (display: grid) {
+    .content-section.gallery {
+        display: grid;
+        
+        grid-template-columns: repeat(2, minmax(160px, 420px));
+        gap: 1.25rem;
+        
+        
+        align-items: center; 
+        
+        justify-items: center; 
+        justify-content: center; 
+        grid-auto-rows: auto;
+    }
+}
+
+
+.month {
+    margin-bottom: 2.5rem;
+}
+
+.month-subsection {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    justify-self: center; 
+}
+
+
+.month-subsection .content-section {
+    width: 100%; 
+    max-width: 100%;
+    margin: 0 auto;
+    
+    display: block;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+/* If a month-subsection sits inside a gallery, make it span the full gallery row
+   so subsection title + inner gallery are centered and not constrained to one column. */
+.content-section.gallery > .month-subsection {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-self: center;
+}
+
+/* Allow inner galleries inside subsections to use the full subsection width
+   and avoid inheriting the global max-width that keeps two-columns tightly capped. */
+.month-subsection > .content-section.gallery {
+    max-width: none !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    grid-template-columns: repeat(2, minmax(160px, 420px)) !important;
+    justify-content: center !important;
+}
+
+
+.final-row {
+    display: flex;
+    gap: 1.25rem;
+    justify-content: center;
+    width: 100%;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.final-row .gallery-figure {
+    width: auto; 
+}
+
+
+@media (pointer: coarse) {
+    .content-section.gallery {
+        gap: 1rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .gallery-figure {
+        padding: 1rem;
+    }
+    
+    .gallery-figure:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    .border-image {
+        border-width: 3px; 
+        border-radius: 8px;
+    }
+    .gallery-item {
+        border-radius: 6px;
+    }
+    
+    .gallery-figure, .gallery-item {
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        touch-action: manipulation;
+    }
+}
+
+
+@media (max-width: 520px) {
+    .gallery-figure {
+        transition: none;
+    }
+    .border-image {
+        border: 0.45rem solid white; 
+    }
+    
+    .month-subsection .content-section {
+        width: 100%;
+        justify-content: center;
+    }
+}
+.subsection-title {
+    color: #F59525;
+    font-family: "Rodin";
+    text-align: center;
+    font-size: clamp(1rem, 3.5vw, 5rem);
+    margin: 0.4rem 0 0.6rem 0;
+    
+    text-shadow: 1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white;
+    
+    --stroke: 0.25vw;
+    text-shadow:
+        calc(var(--stroke) * -1) calc(var(--stroke) * -1) 0 white,
+        var(--stroke) calc(var(--stroke) * -1) 0 white,
+        calc(var(--stroke) * -1) var(--stroke) 0 white,
+        var(--stroke) var(--stroke) 0 white,
+        0px calc(var(--stroke) * -1) 0 white,
+        0px var(--stroke) 0 white,
+        calc(var(--stroke) * -1) 0px 0 white,
+        var(--stroke) 0px 0 white;
+}
+
+.gallery-item {
+    width: 100%; 
+    max-width: 100%;
+    height: auto; 
+    display: block;
+    object-fit: contain; 
+    border-radius: 0.8rem;
+} 
+
+
+.gallery-item.zoomable {
+    cursor: zoom-in;
+}
+
+/* Videos in galleries should behave like images: fill card width, keep aspect ratio,
+   and inherit the card's rounded corners. */
+.gallery-figure video.gallery-item {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 0.8rem;
+    background: #000; 
+}
+
+.gallery-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 0.6rem;
+    background: rgba(255,255,255,0.03);
+    padding: 0.8rem;
+    border-radius: 1rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    width: 100%; 
+    max-width: 420px; 
+    box-sizing: border-box; 
+} 
+
+.gallery-figure:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(11,11,11,0.16);
+} 
+
+.gallery-caption {
+    color: #F59525;
+    font-family: "Rodin";
+    text-align: center;
+    font-size: clamp(0.75rem, 2vw, 2rem);
+    line-height: 1.2;
+    margin-top: 0.25rem;
+    
+    text-shadow: 1px 1px 0 white, -1px -1px 0 white;
+    
+    --stroke: 0.18vw;
+    text-shadow:
+        calc(var(--stroke) * -1) calc(var(--stroke) * -1) 0 white,
+        var(--stroke) calc(var(--stroke) * -1) 0 white,
+        calc(var(--stroke) * -1) var(--stroke) 0 white,
+        var(--stroke) var(--stroke) 0 white,
+        0px calc(var(--stroke) * -1) 0 white,
+        0px var(--stroke) 0 white,
+        calc(var(--stroke) * -1) 0px 0 white,
+        var(--stroke) 0px 0 white;
+}
+
+
+@media (max-width: 520px) {
+    .content-section.gallery {
+        
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.9rem;
+        justify-content: center;
+    }
+    .gallery-figure {
+        max-width: none; 
+        padding: 0.6rem;
+    }
+    .gallery-item {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+
+.content-section.gallery > .gallery-figure:nth-last-child(1):nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+
+@media (min-width: 720px) and (max-width: 1259px) {
+    
+    .content-section.gallery > .gallery-figure:nth-last-child(1):nth-child(3n+1) {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+    
+    .content-section.gallery > .gallery-figure:nth-last-child(2):nth-child(3n+2),
+    .content-section.gallery > .gallery-figure:nth-last-child(1):nth-child(3n+3) {
+        grid-column: span 2;
+        justify-self: center;
+    }
+}
+
+
+@media (min-width: 1260px) and (max-width: 1679px) {
+    .content-section.gallery > .gallery-figure:nth-last-child(1):nth-child(4n+1) {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+    .content-section.gallery > .gallery-figure:nth-last-child(2):nth-child(4n+3),
+    .content-section.gallery > .gallery-figure:nth-last-child(1):nth-child(4n+4) {
+        grid-column: span 2;
+        justify-self: center;
+    }
+}
+
+
+.scroll-fade {
+    opacity: 0;
+    
+    transform: translateY(50px) scale(0.95); 
+    
+    transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: opacity, transform;
+}
+
+
+.scroll-fade.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+
+.content-section.gallery {
+    display: grid !important;
+    
+    grid-template-columns: repeat(2, minmax(160px, 420px)) !important;
+    gap: 1.25rem !important;
+    justify-items: center !important;
+    
+    max-width: calc(840px + 1.25rem) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    align-items: center !important; 
+}
+
+#start-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #855104; 
+    color: #F59525;
+    font-family: "Rodin", sans-serif;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#start-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#start-overlay .title {
+    font-size: 8vw;
+    text-transform: uppercase;
+    --stroke: 0.3vw;
+}
+
+
+body.is-locked {
+    overflow: hidden;
+    height: 100vh;
+}
+
+
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    border: 0.4vw solid white; 
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.lightbox.active .lightbox-content img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-family: "Rodin", sans-serif;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10001;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.lightbox-close:hover {
+    color: #F59525;
+}
